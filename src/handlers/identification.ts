@@ -10,6 +10,7 @@ import {
   PrismaClientKnownRequestError,
   PrismaClientUnknownRequestError,
 } from "@prisma/client/runtime/library";
+import { ChristianToBuddhistDate } from "../const/const";
 
 export default class IdentificationHandler implements IIdentificationHandler {
   constructor(private repo: IIdentificationRepository) {}
@@ -21,8 +22,10 @@ export default class IdentificationHandler implements IIdentificationHandler {
     try {
       const {
         identification_number,
+        title_thai,
         name_thai,
         surename_thai,
+        title_eng,
         name_eng,
         surename_eng,
         date_of_birth,
@@ -32,20 +35,28 @@ export default class IdentificationHandler implements IIdentificationHandler {
         date_of_expiry,
       } = req.body;
 
+      const birthBuddhistEraDate = ChristianToBuddhistDate(date_of_birth);
+      const issueBuddhistEraDate = ChristianToBuddhistDate(date_of_issue);
+      const expiryBuddhistEraDate = ChristianToBuddhistDate(date_of_expiry);
       const isMatch = await this.repo.getById(identification_number);
 
       if (!isMatch) {
         const result = await this.repo.create({
           identification_number,
+          title_thai,
           name_thai,
           surename_thai,
+          title_eng,
           name_eng,
           surename_eng,
           date_of_birth,
+          date_of_birth_buddhist: birthBuddhistEraDate,
           religion,
           address,
           date_of_issue,
+          date_of_issue_buddhist: issueBuddhistEraDate,
           date_of_expiry,
+          date_of_expiry_buddhist: expiryBuddhistEraDate,
         });
         return res.status(201).json(result).end();
       } else {

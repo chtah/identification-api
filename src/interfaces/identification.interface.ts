@@ -6,8 +6,10 @@ import { IMessageDto } from "../dto/message.dto";
 export interface IIdentification {
   id: string;
   identification_number: string;
+  title_thai: string;
   name_thai: string;
   surename_thai: string;
+  title_eng: string;
   name_eng: string;
   surename_eng: string;
   date_of_birth: Date;
@@ -19,15 +21,20 @@ export interface IIdentification {
 
 export interface ICreateIdentification {
   identification_number: string;
+  title_thai: string;
   name_thai: string;
   surename_thai: string;
+  title_eng: string;
   name_eng: string;
   surename_eng: string;
   date_of_birth: Date;
+  date_of_birth_buddhist: Date;
   religion: string;
   address: string;
   date_of_issue: Date;
+  date_of_issue_buddhist: Date;
   date_of_expiry: Date;
+  date_of_expiry_buddhist: Date;
 }
 
 export interface IIdentification_number {
@@ -36,7 +43,7 @@ export interface IIdentification_number {
 
 export interface IIdentificationRepository {
   create(data: ICreateIdentification): Promise<Identification>;
-  getAll(): Promise<IIdentification[]>;
+  getAll(): Promise<IIdentificationDto[]>;
   getById(id_number: string): Promise<IIdentification_number | boolean>;
 }
 
