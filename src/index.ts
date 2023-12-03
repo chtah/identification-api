@@ -31,6 +31,10 @@ identificationRouter.post(
   identificationHandler.createIdentification
 );
 identificationRouter.get("/getAll", identificationHandler.getAllIdentification);
+identificationRouter.delete(
+  "/delete",
+  identificationHandler.deleteIdentification
+);
 
 app.listen(PORT, () => {
   console.log(`API is up at ${PORT}`);

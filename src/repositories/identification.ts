@@ -81,4 +81,15 @@ export default class IdentificationRepository
       throw error;
     }
   }
+
+  public async deleteById(id_number: string): Promise<IIdentificationDto> {
+    try {
+      const deleteInfo = await this.prisma.identification.delete({
+        where: { identification_number: id_number },
+      });
+      return deleteInfo;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

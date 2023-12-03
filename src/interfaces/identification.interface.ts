@@ -45,6 +45,7 @@ export interface IIdentificationRepository {
   create(data: ICreateIdentification): Promise<Identification>;
   getAll(): Promise<IIdentificationDto[]>;
   getById(id_number: string): Promise<IIdentification_number | boolean>;
+  deleteById(id_number: string): Promise<IIdentificationDto>;
 }
 
 export interface IIdentificationHandler {
@@ -54,4 +55,9 @@ export interface IIdentificationHandler {
     ICreateIdentification
   >;
   getAllIdentification: RequestHandler<{}, IIdentificationDto[] | IMessageDto>;
+  deleteIdentification: RequestHandler<
+    {},
+    IIdentificationDto | IMessageDto,
+    IIdentification_number
+  >;
 }

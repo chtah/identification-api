@@ -3,6 +3,7 @@ import {
   ICreateIdentification,
   IIdentificationHandler,
   IIdentificationRepository,
+  IIdentification_number,
 } from "../interfaces/identification.interface";
 import { IIdentificationDto } from "../dto/identification.dto";
 import { IMessageDto } from "../dto/message.dto";
@@ -90,6 +91,38 @@ export default class IdentificationHandler implements IIdentificationHandler {
       const allIdentification = await this.repo.getAll();
       return res.status(200).json(allIdentification).end();
     } catch (error) {
+      return res.status(500).json({ message: `Internal Error` }).end();
+    }
+  };
+
+  public deleteIdentification: RequestHandler<
+    {},
+    IIdentificationDto | IMessageDto,
+    IIdentification_number
+  > = async (req, res) => {
+    try {
+      const { identification_number } = req.body;
+
+      const isMatch = await this.repo.getById(identification_number);
+
+      if (isMatch) {
+        const deleteIdentification = await this.repo.deleteById(
+          identification_number
+        );
+        return res.status(200).json(deleteIdentification).end();
+      } else {
+        return res
+          .status(202)
+          .json({ message: `Not found ID Number : ${identification_number}` })
+          .end();
+      }
+    } catch (error) {
+      console.log(error);
+      if (
+        error instanceof PrismaClientKnownRequestError ||
+        error instanceof PrismaClientUnknownRequestError
+      )
+        return res.status(500).json({ message: `Prisma Error` }).end();
       return res.status(500).json({ message: `Internal Error` }).end();
     }
   };
