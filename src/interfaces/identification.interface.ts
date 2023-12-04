@@ -67,12 +67,12 @@ export interface IIdentificationHandler {
     IIdentification_number
   >;
   searchIdentificationNumber: RequestHandler<
-    {},
+    { search: string },
     IIdentificationDto[] | IMessageDto,
     IIdentification_number
   >;
   searchNameOrSurename: RequestHandler<
-    {},
+    { search: string },
     IIdentificationDto[] | IMessageDto,
     ISearchByNameOrSurename
   >;

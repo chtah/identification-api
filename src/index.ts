@@ -36,11 +36,11 @@ identificationRouter.delete(
   identificationHandler.deleteIdentification
 );
 identificationRouter.get(
-  "/searchbyid",
+  "/searchbyid/:search",
   identificationHandler.searchIdentificationNumber
 );
 identificationRouter.get(
-  "/searchbyname",
+  "/searchbyname/:search",
   identificationHandler.searchNameOrSurename
 );
 

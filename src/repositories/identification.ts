@@ -114,10 +114,10 @@ export default class IdentificationRepository
       const searchByName = await this.prisma.identification.findMany({
         where: {
           OR: [
-            { name_thai: { contains: search } },
-            { name_eng: { contains: search } },
-            { surename_thai: { contains: search } },
-            { surename_eng: { contains: search } },
+            { name_thai: { contains: search, mode: "insensitive" } },
+            { name_eng: { contains: search, mode: "insensitive" } },
+            { surename_thai: { contains: search, mode: "insensitive" } },
+            { surename_eng: { contains: search, mode: "insensitive" } },
           ],
         },
       });
