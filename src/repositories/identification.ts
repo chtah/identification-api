@@ -92,4 +92,43 @@ export default class IdentificationRepository
       throw error;
     }
   }
+
+  public async searchById(id_number: string): Promise<IIdentificationDto[]> {
+    try {
+      const searchByIdInfo = await this.prisma.identification.findMany({
+        where: { identification_number: { contains: id_number } },
+      });
+
+      if (searchByIdInfo.length === 0) {
+        throw new Error("No matching records found.");
+      }
+
+      return searchByIdInfo;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async searchByAllName(search: string): Promise<IIdentificationDto[]> {
+    try {
+      const searchByName = await this.prisma.identification.findMany({
+        where: {
+          OR: [
+            { name_thai: { contains: search } },
+            { name_eng: { contains: search } },
+            { surename_thai: { contains: search } },
+            { surename_eng: { contains: search } },
+          ],
+        },
+      });
+      console.log(searchByName);
+      if (searchByName.length === 0) {
+        throw new Error("No matching records found.");
+      }
+
+      return searchByName;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

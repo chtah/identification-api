@@ -41,11 +41,17 @@ export interface IIdentification_number {
   identification_number: string;
 }
 
+export interface ISearchByNameOrSurename {
+  search: string;
+}
+
 export interface IIdentificationRepository {
   create(data: ICreateIdentification): Promise<Identification>;
   getAll(): Promise<IIdentificationDto[]>;
   getById(id_number: string): Promise<IIdentification_number | boolean>;
   deleteById(id_number: string): Promise<IIdentificationDto>;
+  searchById(id_number: string): Promise<IIdentificationDto[]>;
+  searchByAllName(search: string): Promise<IIdentificationDto[]>;
 }
 
 export interface IIdentificationHandler {
@@ -59,5 +65,15 @@ export interface IIdentificationHandler {
     {},
     IIdentificationDto | IMessageDto,
     IIdentification_number
+  >;
+  searchIdentificationNumber: RequestHandler<
+    {},
+    IIdentificationDto[] | IMessageDto,
+    IIdentification_number
+  >;
+  searchNameOrSurename: RequestHandler<
+    {},
+    IIdentificationDto[] | IMessageDto,
+    ISearchByNameOrSurename
   >;
 }

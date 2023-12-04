@@ -4,6 +4,7 @@ import {
   IIdentificationHandler,
   IIdentificationRepository,
   IIdentification_number,
+  ISearchByNameOrSurename,
 } from "../interfaces/identification.interface";
 import { IIdentificationDto } from "../dto/identification.dto";
 import { IMessageDto } from "../dto/message.dto";
@@ -124,6 +125,50 @@ export default class IdentificationHandler implements IIdentificationHandler {
       )
         return res.status(500).json({ message: `Prisma Error` }).end();
       return res.status(500).json({ message: `Internal Error` }).end();
+    }
+  };
+
+  public searchIdentificationNumber: RequestHandler<
+    {},
+    IIdentificationDto[] | IMessageDto,
+    IIdentification_number
+  > = async (req, res) => {
+    try {
+      const { identification_number } = req.body;
+
+      const resultIdentification = await this.repo.searchById(
+        identification_number
+      );
+      return res.status(200).json(resultIdentification).end();
+    } catch (error) {
+      console.log(error);
+      if (
+        error instanceof PrismaClientKnownRequestError ||
+        error instanceof PrismaClientUnknownRequestError
+      )
+        return res.status(500).json({ message: `Prisma Error` }).end();
+      return res.status(500).json({ message: `No match result` }).end();
+    }
+  };
+
+  public searchNameOrSurename: RequestHandler<
+    {},
+    IIdentificationDto[] | IMessageDto,
+    ISearchByNameOrSurename
+  > = async (req, res) => {
+    try {
+      const { search } = req.body;
+      console.log(search);
+      const result = await this.repo.searchByAllName(search);
+      return res.status(200).json(result).end();
+    } catch (error) {
+      console.log(error);
+      if (
+        error instanceof PrismaClientKnownRequestError ||
+        error instanceof PrismaClientUnknownRequestError
+      )
+        return res.status(500).json({ message: `Prisma Error` }).end();
+      return res.status(500).json({ message: `No match result` }).end();
     }
   };
 }

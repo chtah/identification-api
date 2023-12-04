@@ -35,6 +35,14 @@ identificationRouter.delete(
   "/delete",
   identificationHandler.deleteIdentification
 );
+identificationRouter.get(
+  "/searchbyid",
+  identificationHandler.searchIdentificationNumber
+);
+identificationRouter.get(
+  "/searchbyname",
+  identificationHandler.searchNameOrSurename
+);
 
 app.listen(PORT, () => {
   console.log(`API is up at ${PORT}`);
