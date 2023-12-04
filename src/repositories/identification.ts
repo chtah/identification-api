@@ -31,6 +31,7 @@ export default class IdentificationRepository
         date_of_issue_buddhist: data.date_of_issue_buddhist,
         date_of_expiry: data.date_of_expiry,
         date_of_expiry_buddhist: data.date_of_expiry_buddhist,
+        mobile_phone: data.mobile_phone,
       },
     });
   }
@@ -54,6 +55,7 @@ export default class IdentificationRepository
         date_of_issue_buddhist: true,
         date_of_expiry: true,
         date_of_expiry_buddhist: true,
+        mobile_phone: true,
       },
     });
     return allIdentification;

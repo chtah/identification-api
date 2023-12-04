@@ -35,6 +35,7 @@ export default class IdentificationHandler implements IIdentificationHandler {
         address,
         date_of_issue,
         date_of_expiry,
+        mobile_phone,
       } = req.body;
 
       const birthBuddhistEraDate = ChristianToBuddhistDate(date_of_birth);
@@ -59,6 +60,7 @@ export default class IdentificationHandler implements IIdentificationHandler {
           date_of_issue_buddhist: issueBuddhistEraDate,
           date_of_expiry,
           date_of_expiry_buddhist: expiryBuddhistEraDate,
+          mobile_phone,
         });
         return res.status(201).json(result).end();
       } else {

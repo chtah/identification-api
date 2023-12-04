@@ -27,4 +27,5 @@ model Identification {
   date_of_expiry          DateTime @db.Date
   date_of_issue_buddhist  DateTime @db.Date
   date_of_expiry_buddhist DateTime @db.Date
+  mobile_phone            String?
 }

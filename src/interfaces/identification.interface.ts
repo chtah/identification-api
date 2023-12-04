@@ -17,6 +17,7 @@ export interface IIdentification {
   address: string;
   date_of_issue: Date;
   date_of_expiry: Date;
+  mobile_phone: string | null;
 }
 
 export interface ICreateIdentification {
@@ -35,6 +36,7 @@ export interface ICreateIdentification {
   date_of_issue_buddhist: Date;
   date_of_expiry: Date;
   date_of_expiry_buddhist: Date;
+  mobile_phone: string | null;
 }
 
 export interface IIdentification_number {
